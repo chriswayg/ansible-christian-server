@@ -6,19 +6,20 @@ base_users:
     key: "{{ lookup('file', '/Users/christian/.ssh/id_rsa.pub') }}"
     password: deploy12345
 
+# name of disk to show available space on login
 base_main_disk: vda1
 
 base_motd_message: "Welcome to this server!"
 
 # packages we want on every server
 base_packages:
+  - verse
   - curl
-  - jed
   - lsof
-  - mosh
   - ncdu
   - psmisc
   - pv
   - screen
   - sudo
-  - verse
+  #- jed
+  #- mosh

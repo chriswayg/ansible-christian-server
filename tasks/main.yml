@@ -1,0 +1,53 @@
+---
+# tasks file for chriswayg.base
+
+- name: Install useful packages.
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ base_packages }}"
+
+- name: Show a nice message of the day graphic and a message after login.
+  template:
+    src: motd.j2
+    dest: /etc/motd
+
+- name: Add users.
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    shell: /bin/bash
+  with_items: "{{ base_users }}"
+
+- name: Add public keys for users.
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+  with_items: "{{ base_users }}"
+
+- name: Copy bashrc for each user.
+  copy:
+    src: users.bashrc
+    dest: "/home/{{ item.name }}/.bashrc"
+  with_items: "{{ base_users }}"
+
+- name: Copy customized root bashrc.
+  copy:
+    src: bashrc
+    dest: /root/.bashrc
+
+- name: Copy profile.d with verse and history
+  template:
+    src: profile_verse_history.sh.j2
+    dest: /etc/profile.d/profile_verse_history.sh
+
+- name: Full upgrade of system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+### Banner used by SSH willshersystems.sshd
+- name: Issue warning Banner
+  copy:
+    src: issue.net
+    dest: /etc/issue.net

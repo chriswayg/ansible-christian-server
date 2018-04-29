@@ -1,0 +1,24 @@
+---
+# defaults file for chriswayg.base
+
+base_users:
+  - name: deploy
+    key: "{{ lookup('file', '/Users/christian/.ssh/id_rsa.pub') }}"
+    password: deploy12345
+
+base_main_disk: vda1
+
+base_motd_message: "Welcome to this server!"
+
+# packages we want on every server
+base_packages:
+  - curl
+  - jed
+  - lsof
+  - mosh
+  - ncdu
+  - psmisc
+  - pv
+  - screen
+  - sudo
+  - verse

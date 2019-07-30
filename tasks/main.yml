@@ -46,9 +46,3 @@
   template:
     src: profile_verse_history.sh.j2
     dest: /etc/profile.d/profile_verse_history.sh
-
-### Banner used by SSH willshersystems.sshd
-- name: Issue warning Banner
-  copy:
-    src: issue.net
-    dest: /etc/issue.net

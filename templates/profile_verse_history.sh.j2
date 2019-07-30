@@ -15,5 +15,5 @@ if [ -f /usr/bin/verse ]; then
 fi
 uname -srm
 w -s
-echo -e "\nDisk usage       Size  Used Avail Use% Mount"
+echo -e "\nDisk usage               Size  Used Avail Use% Mount"
 df -h | grep {{ base_main_disk }} # disk space

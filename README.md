@@ -30,7 +30,7 @@ Including an example of how to use your role (for instance, with variables passe
 License
 -------
 
-GPLv2 or later
+MIT
 
 Author Information
 ------------------

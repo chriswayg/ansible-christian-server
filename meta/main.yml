@@ -1,11 +1,14 @@
 ---
 galaxy_info:
   author: Christian Wagner
-  description: Base setup for Debian (bashrc, profile
+  description: Base setup for Debian (bashrc, profile)
   license: MIT
-  min_ansible_version: 2.4
+
+  #version used: 2.8
+  min_ansible_version: 2.5
+  
   platforms:
   - name: Debian
     versions:
-    - jessie
     - stretch
+    - buster

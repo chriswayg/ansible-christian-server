@@ -1,2 +1,9 @@
 ---
-# handlers file for chriswayg.base
+# handlers file for ansible-christian-server
+
+- name: restart systemd-logind
+  service:
+    name: systemd-logind
+    state: restarted
+  when: >
+    ansible_service_mgr == 'systemd'

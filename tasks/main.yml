@@ -1,22 +1,44 @@
 ---
-# tasks file for chriswayg.base
+# tasks file for ansible-christian-server
 
-- name: Update and upgrade all packages.
+- name: Ensure, that all packages are updated and upgraded.
   apt:
-    upgrade: yes
+    upgrade: "yes"
     update_cache: yes
     cache_valid_time: 86400 #One day
 
-- name: Install useful packages.
+- name: Ensure that initial packages are installed.
   apt:
-    pkg: "{{ item }}"
+    name: "{{ initial_packages }}"
     state: present
-  with_items: "{{ base_packages }}"
 
-- name: Show a nice message of the day graphic and a message after login.
+# see also https://github.com/holms/ansible-fqdn
+- name: Set hostname.
+  hostname:
+    name: "{{ base_hostname }}"
+  notify:
+    - restart systemd-logind
+
+- name: Copy hosts file with FQDN and hostname.
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+  notify:
+    - restart systemd-logind
+
+- name: Set timezone.
+  timezone:
+    name: "{{ base_timezone }}"
+
+- name: Create a nice message of the day graphic and a greeting.
   template:
     src: motd.j2
     dest: /etc/motd
+
+- name: Show the motd after login.
+  copy:
+    src: 20-motd-welcome
+    dest: /etc/update-motd.d/20-motd-welcome
 
 - name: Add users.
   user:
@@ -30,6 +52,11 @@
     user: "{{ item.name }}"
     key: "{{ item.key }}"
   with_items: "{{ base_users }}"
+
+- name: Add public key for root.
+  authorized_key:
+    user: root
+    key: "{{ base_root_key }}"
 
 - name: Copy bashrc for each user.
   copy:

@@ -1,0 +1,3 @@
+#!/bin/sh
+# {{ ansible_managed }}
+cat /etc/motd

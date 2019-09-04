@@ -1,13 +1,19 @@
 ---
-# defaults file for chriswayg.base
+# defaults file for ansible-christian-server
+base_hostname: server1
+base_domain: example.org
+base_fqdn: "{{ base_hostname }}.{{ base_domain }}"
 
+base_timezone: Asia/Manila
+
+base_root_key: "{{ lookup('file', './../.ssh/id_rsa.pub') }}"
 base_users:
   - name: deploy
-    key: "{{ lookup('file', '/Users/christian/.ssh/id_rsa.pub') }}"
+    key: "{{ lookup('file', './../.ssh/id_rsa.pub') }}"
     password: deploy12345
 
 # name of disk to show available space on login
-base_main_disk: vda1
+base_main_disk: sda1
 
 base_motd_message: "Welcome to this server!"
 
@@ -16,10 +22,10 @@ base_packages:
   - verse
   - curl
   - lsof
+  - lshw
   - ncdu
   - psmisc
+  - netstat-nat
   - pv
   - screen
   - sudo
-  #- jed
-  #- mosh

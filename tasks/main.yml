@@ -9,7 +9,7 @@
 
 - name: Ensure that initial packages are installed.
   apt:
-    name: "{{ initial_packages }}"
+    name: "{{ base_packages }}"
     state: present
 
 # see also https://github.com/holms/ansible-fqdn
